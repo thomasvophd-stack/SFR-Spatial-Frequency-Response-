@@ -2,7 +2,7 @@
 #include <vector>
 #include <math.h>
 #include "sfr_utility.h"
-#include "kiss_fft130/kiss_fft.h"
+#include "../third_party/kiss_fft130/kiss_fft.h"
 #include "float.h"
 
 #include <fstream>

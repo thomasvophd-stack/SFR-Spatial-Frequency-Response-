@@ -160,7 +160,7 @@ int main(){
         /* Polyfit to find MTF@Ny/4 */
         int n_poly = 10;
         vector<double> coeff(n_poly);
-        polyfit(freq, mtf, coeff, n_poly);
+        /*polyfit(freq, mtf, coeff, n_poly);*/
 
         double sfr_Ny4 = coeff[0];
         for (int i = 1; i <= n_poly; i++){
