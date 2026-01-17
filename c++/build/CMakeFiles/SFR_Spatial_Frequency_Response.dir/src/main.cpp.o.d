@@ -948,8 +948,8 @@ CMakeFiles/SFR_Spatial_Frequency_Response.dir/src/main.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_select.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_types/_uuid_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/gethostuuid.h \
-  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/sfr_utility.h \
-  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/sfr_utility_polyfit.h \
+  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/../include/sfr_utility.h \
+  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/../include/sfr_utility_polyfit.h \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/QR \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/Core \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/Version \

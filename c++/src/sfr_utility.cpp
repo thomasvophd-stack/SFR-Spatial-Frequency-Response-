@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#include "sfr_utility.h"
+#include "../include/sfr_utility.h"
 #include "../third_party/kiss_fft130/kiss_fft.h"
 #include "float.h"
 

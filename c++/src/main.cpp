@@ -22,8 +22,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "sfr_utility.h"
-#include "sfr_utility_polyfit.h"
+#include "../include/sfr_utility.h"
+#include "../include/sfr_utility_polyfit.h"
 #include "json/json.h"
 
 using namespace std;

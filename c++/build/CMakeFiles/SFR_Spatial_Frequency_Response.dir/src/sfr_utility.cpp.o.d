@@ -791,7 +791,7 @@ CMakeFiles/SFR_Spatial_Frequency_Response.dir/src/sfr_utility.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__fwd/stack.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/print \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/unistd.h \
-  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/sfr_utility.h \
+  /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/../include/sfr_utility.h \
   /Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/src/../third_party/kiss_fft130/kiss_fft.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/float.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include/float.h \
