@@ -48,7 +48,7 @@ int main(){
     float freq_Ny4 = 1/(2*pixel_size)/4;
     
     // Used opencv to read png image.
-    string dir = "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/data/"; // folder containing ROI and input image
+    string dir = "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/data/"; // folder containing ROI and input image
     string file_img = "images/test.png"; // The raw image
     string file_roi = "ROI/rois.csv"; // ROI coordinates
     

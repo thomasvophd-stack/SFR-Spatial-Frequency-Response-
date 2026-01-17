@@ -72,6 +72,7 @@
 ## About The Project
 This is a module written in c++ (and soon Pytho) which is an implementation of Peter Burn's Matlab version ISO-12233 slant-edge methodology: sfrmat3.  It is used primarily as a fast and efficient way to deploy camera characterization.
 
+However, this is not meant solely as a standalone package but rather as a teaching tool for image processing standard practices.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
