@@ -1,4 +1,4 @@
-// App to calculate SFR from images. Based off SFRMat...but free.
+// App to calculate SFR from images. Based off SFRMat...but free and open source.
 // Thomas Vo
 
 #include <iostream>
@@ -50,7 +50,7 @@ int main(){
     // Used opencv to read png image.
     string dir = "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/data/"; // folder containing ROI and input image
     string file_img = "images/test.png"; // The raw image
-    string file_roi = "ROI/rois.csv"; // ROI coordinates
+    string file_roi = "config/rois.csv"; // ROI coordinates
     
     cout << "\n" << "Target directory: \n" << dir << "\n" << endl;
 
