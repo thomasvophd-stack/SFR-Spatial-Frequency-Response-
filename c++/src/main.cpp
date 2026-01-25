@@ -41,6 +41,13 @@ void print(std::vector<double> const &input)
 }
 
 int main(){
+    /*
+    This module provesses one image with multiple ROIs to calculate SFR.
+    The image is read in using OpenCV.
+    The ROIs are read in from a .csv file.
+    Analysis is performed on each ROI to calculate the SFR using the get_sfr function from sfr_utility.cpp.
+    The output SFR data is written to a Json file. 
+    */
 
     // 3 micron pixel size
     // float pixel_size = 3 * 0.001;
@@ -66,7 +73,7 @@ int main(){
     }
 
     // The upper left is the origin for each of the ROIs
-    vector<int> ROI_x, ROI_y, ROI_x_del, ROI_y_del;
+    vector<int> roi_x, roi_y, roi_x_del, roi_y_del;
     string line, num;
 
     // Open ROI file with fstream
@@ -82,21 +89,21 @@ int main(){
             num.erase(0,3);
             isFirstLine = false;
         }
-        ROI_x.push_back(stoi(num));
+        roi_x.push_back(stoi(num));
         getline(fin, num, ',');
-        ROI_y.push_back(stoi(num));
+        roi_y.push_back(stoi(num));
         getline(fin, num, ',');
-        ROI_x_del.push_back(stoi(num));
+        roi_x_del.push_back(stoi(num));
         getline(fin, num, '\n');
-        ROI_y_del.push_back(stoi(num));
+        roi_y_del.push_back(stoi(num));
     }
 
     // Get the ROI from the image
-    int  n=ROI_x.size();
+    int  n=roi_x.size();
     vector<double> mtf_at_Ny4_poly;
     vector<double> mtf_at_Ny4_intp;
 
-    cout << "ROI_x size = " << n << "\n";
+    cout << "roi_x size = " << n << "\n";
 
     // Create image string::path for ROIs
     std::string path(dir+"images/" + sn + "/");
@@ -122,7 +129,7 @@ int main(){
 
     for(int i=0; i<n; i++){
         // Use openCV to crop the image to each ROI.
-        cv::Rect rect(ROI_x[i], ROI_y[i], ROI_x_del[i]+1, ROI_y_del[i]+1);
+        cv::Rect rect(roi_x[i], roi_y[i], roi_x_del[i]+1, roi_y_del[i]+1);
         cv::Mat roiRef(img, rect);
         cv::Mat img_roi;
         roiRef.copyTo(img_roi);

@@ -2868,7 +2868,7 @@
       ]
    },
    "Metadata" : {
-      "Filename" : "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/data/images/rois/img_roi_3.png",
+      "Filename" : "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/data/images/rois/img_roi_3.png",
       "Number of Columns" : 41,
       "Number of Rows" : 31
    }

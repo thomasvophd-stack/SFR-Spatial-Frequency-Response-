@@ -15,7 +15,7 @@ using namespace std;
 
 void get_sfr(double del, vector<double> roi, int nlin, int npix, vector<double>&esf, vector<double>&psf, vector<double>&mtf, vector<double>&freq, string filename){
     /*
-    
+    Main SFR function
     */
     cout << "\n" << "Running SFR Subroutine...";
     int nbin = 4;
@@ -72,7 +72,7 @@ void get_sfr(double del, vector<double> roi, int nlin, int npix, vector<double>&
 
     vector<double> place(nlin);
     for (int i = 0; i < nlin; i++){
-        //place[i] = fitResult[0] * i + fitResult[1];  // This makes more sense to me, but the line below follows sfrmat3. Impact to the final MTF@Ny/4 is ~<0.00005.
+        //place[i] = fitResult[0] * i + fitResult[1]; 
         place[i] = fitResult[0] * (i+1) + fitResult[1];
         vector<double> win2 = ahamming(npix, place[i]);
         vector<double> apply_win2(npix);
@@ -97,6 +97,8 @@ void get_sfr(double del, vector<double> roi, int nlin, int npix, vector<double>&
  
     /* Get 4x super sampled ESF*/
     esf = project(roi,  nlin, npix, fitResult2[0], nbin);
+
+    cout << "ESF size is " << esf.size() << "\n";
 
     /* compute first derivative via FIR (1x3) filter fil2 */
     psf = deriv1(esf, 1, nn, fil2);
