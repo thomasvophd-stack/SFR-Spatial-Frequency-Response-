@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Find OpenCV package
 find_package(OpenCV REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 # Include directories
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -31,4 +32,5 @@ add_executable(SFR_Spatial_Frequency_Response
 target_link_libraries(SFR_Spatial_Frequency_Response 
     ${OpenCV_LIBS} 
     /opt/homebrew/opt/jsoncpp/lib/libjsoncpp.dylib
+    nlohmann_json::nlohmann_json
 )

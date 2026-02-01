@@ -40,29 +40,137 @@ void print(std::vector<double> const &input)
     }
 }
 
-int main(){
+struct ROI {
+    int x;
+    int y;
+    int x_del;
+    int y_del;
+};
+
+std::vector<ROI> load_rois_from_json(const std::string& filepath) {
     /*
-    This module provesses one image with multiple ROIs to calculate SFR.
-    The image is read in using OpenCV.
-    The ROIs are read in from a .csv file.
-    Analysis is performed on each ROI to calculate the SFR using the get_sfr function from sfr_utility.cpp.
-    The output SFR data is written to a Json file. 
+    Opens a JSON file and reads in ROIs defined as arrays of four integers:
+    [x, y, x_del, y_del]
+
+    @param filepath: Path to the JSON file.
+    @return a vector of ROI structs.
     */
 
-    // 3 micron pixel size
-    // float pixel_size = 3 * 0.001;
-    float pixel_size = 1.0;
-    float freq_Ny4 = 1/(2*pixel_size)/4;
-    
+    // Open the JSON file
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Could not open the file: " << filepath << std::endl;
+        throw std::runtime_error("Could not open file: " + filepath);
+    }
+
+    // Define JSON root, parser objects, and error string
+    Json::Value root;
+    Json::CharReaderBuilder reader;
+    std::string errs;
+
+    // Parse the JSON file
+    if (!Json::parseFromStream(reader, file, &root, &errs)) {
+        std::cerr << "Error parsing JSON: " << errs << std::endl;
+        std::runtime_error("Failed to parse JSON: " + errs);
+
+    }
+
+    // Ensure rois key exists and is an array
+    if (!root.isMember("rois") || !root["rois"].isArray()) {
+        throw std::runtime_error("'rois' key is missing or is not an array in the JSON file.");
+    }
+
+    // Read in rois from json
+    const Json::Value& rois_json = root["rois"];
+    std::vector<ROI> rois;
+    rois.reserve(rois_json.size());
+
+    for (Json::ArrayIndex i = 0; i < rois_json.size(); ++i) {
+        const Json::Value& roi = rois_json[i];
+
+        if (!roi.isArray() || roi.size() != 4){
+            throw std::runtime_error("Each ROI must be an array of four integers." + std::to_string(i));
+        }
+
+        ROI r;
+        r.x = roi[0].asInt();
+        r.y = roi[1].asInt();
+        r.x_del = roi[2].asInt();
+        r.y_del = roi[3].asInt();
+
+        rois.push_back(r);
+    }
+
+    return rois;
+}
+
+
+int main(){
+    /*
+    This module processes one image with multiple ROIs to calculate SFR.
+    The image is read using OpenCV.
+    The ROIs are read from a config file
+    */
+
+
     // Used opencv to read png image.
     string dir = "/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/data/"; // folder containing ROI and input image
     string file_img = "images/test.png"; // The raw image
-    string file_roi = "config/rois.csv"; // ROI coordinates
-    
+    string file_config = "config/config.json"; // Config file
+    string sn = "TestImage"; // Placeholder for sample name
+    string config_dir = dir + file_config;
+
+    // Open the JSON file
+    cout << "--- Opening JSON File ---" << std::endl;
+    std::ifstream json_file(config_dir, std::ifstream::binary);
+    if (!json_file.is_open()) {
+        std::cerr << "Error: Could not open the file." << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    // Parse JSON content
+    Json::Value root;
+    try {
+        json_file >> root;
+    } catch (const std::exception& e) {
+        std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    // Access the data
+    std::cout << "--- Reading Data ---" << std::endl;
+
+    // Extract pixel_size
+    if (root.isMember("pixel_size")) {
+        float pixel_size = root["pixel_size"].asFloat();
+        std::cout << "Pixel Size: " << pixel_size << std::endl;
+    }
+    else {
+        std::cerr << "Error: 'pixel_size' not found in JSON." << std::endl;
+        return EXIT_FAILURE;
+    }
+    float pixel_size = root["pixel_size"].asFloat();
+    float freq_Ny4 = 1/(2*pixel_size)/4;
+    cout << "Nyquist = " << freq_Ny4;
+
+    // Extract ROIs
+    try {
+        auto rois = load_rois_from_json(config_dir);
+
+        for (const auto& roi : rois) {
+            std::cout << "Loaded ROI - x: " << roi.x << ", y: " << roi.y
+                      << ", x_del: " << roi.x_del << ", y_del: " << roi.y_del << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error loading ROIs: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    auto rois = load_rois_from_json(dir + file_config);
+
     cout << "\n" << "Target directory: \n" << dir << "\n" << endl;
 
     string dir_img = dir + file_img;
-    string dir_roi = dir + file_roi;
     
     cout << "Open Image:\n " << dir_img << endl;
     
@@ -76,26 +184,13 @@ int main(){
     vector<int> roi_x, roi_y, roi_x_del, roi_y_del;
     string line, num;
 
-    // Open ROI file with fstream
-    fstream fin;
-    string sn = file_roi.substr(file_roi.find("/")+1, file_roi.find(".")-file_roi.find("/")-1);
-    fin.open(dir_roi, ios::in);
-    cout << "\nROI Location: \n" << dir_roi << "\n" << endl;
+    int counter = 0;
+    for (const auto& roi: rois){
+        roi_x.push_back(roi.x);
+        roi_y.push_back(roi.y);
+        roi_x_del.push_back(roi.x_del);
+        roi_y_del.push_back(roi.y_del);
 
-    bool isFirstLine = 1;
-    while(getline(fin, num, ',')){
-        // To check if there is a \357 \273 \277 prefix, which indicates UTF-8, at the beginning of the .csv file
-        if (isFirstLine == true && num[0] == '\357') {
-            num.erase(0,3);
-            isFirstLine = false;
-        }
-        roi_x.push_back(stoi(num));
-        getline(fin, num, ',');
-        roi_y.push_back(stoi(num));
-        getline(fin, num, ',');
-        roi_x_del.push_back(stoi(num));
-        getline(fin, num, '\n');
-        roi_y_del.push_back(stoi(num));
     }
 
     // Get the ROI from the image

@@ -5,7 +5,7 @@
 # compile CXX with /usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/opt/homebrew/opt/eigen/include/eigen3 -I/opt/homebrew/opt/jsoncpp/include -I/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/third_party/kiss_fft130 -isystem /opt/homebrew/Cellar/opencv/4.13.0_1/include/opencv4
+C_INCLUDES = -I/opt/homebrew/opt/eigen/include/eigen3 -I/opt/homebrew/opt/jsoncpp/include -I/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/third_party/kiss_fft130 -isystem /opt/homebrew/Cellar/opencv/4.13.0_1/include/opencv4 -isystem /opt/homebrew/include
 
 C_FLAGSarm64 =  -arch arm64
 
@@ -13,7 +13,7 @@ C_FLAGS =  -arch arm64
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/opt/homebrew/opt/eigen/include/eigen3 -I/opt/homebrew/opt/jsoncpp/include -I/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/third_party/kiss_fft130 -isystem /opt/homebrew/Cellar/opencv/4.13.0_1/include/opencv4
+CXX_INCLUDES = -I/opt/homebrew/opt/eigen/include/eigen3 -I/opt/homebrew/opt/jsoncpp/include -I/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/third_party/kiss_fft130 -isystem /opt/homebrew/Cellar/opencv/4.13.0_1/include/opencv4 -isystem /opt/homebrew/include
 
 CXX_FLAGSarm64 = -std=gnu++17 -arch arm64
 

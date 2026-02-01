@@ -234,6 +234,9 @@ SFR_Spatial_Frequency_Response_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 SFR_Spatial_Frequency_Response_SOURCE_DIR:STATIC=/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++
 
+//The directory containing a CMake configuration file for nlohmann_json.
+nlohmann_json_DIR:PATH=/opt/homebrew/share/cmake/nlohmann_json
+
 
 ########################
 # INTERNAL cache entries
@@ -382,4 +385,6 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenCV
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/opt/homebrew/Cellar/opencv/4.13.0_1][v4.13.0()]
+//Details about finding nlohmann_json
+FIND_PACKAGE_MESSAGE_DETAILS_nlohmann_json:INTERNAL=[/opt/homebrew/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake][v3.12.0()]
 
