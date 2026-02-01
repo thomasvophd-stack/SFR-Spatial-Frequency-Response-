@@ -1,3 +1,0 @@
-/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/build/CMakeFiles/SFR_Spatial_Frequency_Response.dir
-/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/build/CMakeFiles/edit_cache.dir
-/Users/thomasvo/Documents/GitHub/SFR-Spatial-Frequency-Response-/c++/build/CMakeFiles/rebuild_cache.dir
