@@ -119,6 +119,7 @@ int main(){
     string file_config = "config/config.json"; // Config file
     string sn = "TestImage"; // Placeholder for sample name
     string config_dir = dir + file_config;
+    string img_dir = dir + file_img;
 
     // Open the JSON file
     cout << "--- Opening JSON File ---" << std::endl;
@@ -155,8 +156,10 @@ int main(){
 
     // Extract ROIs
     try {
+        // Try loading rois
         auto rois = load_rois_from_json(config_dir);
-
+        
+        // test print loaded rois
         for (const auto& roi : rois) {
             std::cout << "Loaded ROI - x: " << roi.x << ", y: " << roi.y
                       << ", x_del: " << roi.x_del << ", y_del: " << roi.y_del << std::endl;
@@ -165,21 +168,8 @@ int main(){
         std::cerr << "Error loading ROIs: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
-
-    auto rois = load_rois_from_json(dir + file_config);
-
-    cout << "\n" << "Target directory: \n" << dir << "\n" << endl;
-
-    string dir_img = dir + file_img;
-    
-    cout << "Open Image:\n " << dir_img << endl;
-    
-    // Open Image
-    cv::Mat img = cv::imread(dir_img, cv::IMREAD_GRAYSCALE);
-    if (img.empty()) {
-        cout << "Cannot find image or open image." << endl;
-    }
-
+    // Actually Load ROIs
+    auto rois = load_rois_from_json(config_dir);
     // The upper left is the origin for each of the ROIs
     vector<int> roi_x, roi_y, roi_x_del, roi_y_del;
     string line, num;
@@ -191,6 +181,13 @@ int main(){
         roi_x_del.push_back(roi.x_del);
         roi_y_del.push_back(roi.y_del);
 
+    }
+
+    // Open image using OpenCV
+    cout << "Open Image:\n " << img_dir << endl;
+    cv::Mat img = cv::imread(img_dir, cv::IMREAD_GRAYSCALE);
+    if (img.empty()) {
+        cout << "Cannot find image or open image." << endl;
     }
 
     // Get the ROI from the image
@@ -210,7 +207,6 @@ int main(){
 
     // Create ROI path and chek if successful.
     int check;
-    // check = mkdir(char_array, 0777);
     
     if (exists_test(char_array)){
         printf("\n Directory Exists. populating ");
@@ -229,29 +225,11 @@ int main(){
         cv::Mat img_roi;
         roiRef.copyTo(img_roi);
 
-        /* // Test image display of ROI. 
-        if(i==1){
-            while(true){
-            cv::imshow("First Rotation of Gray", img_roi);
-            if(cv::waitKey(30)>=0) break;
-            }
-        }
-        */
+        string filename(dir);
+        filename += "images/" + sn + "/img_roi_" + to_string(i+1) + ".png";
 
-       string filename(dir);
-       filename += "images/" + sn + "/img_roi_" + to_string(i+1) + ".png";
-
-       //cout << filename << "\n";
-       cv::imwrite(filename, img_roi);
-       
-       vector<double> roi = (vector<double>) (img_roi.reshape(1,1));
-       
-       /*
-       if (i==1){
-        print(roi);
-       }
-       */
-
+        cv::imwrite(filename, img_roi);       
+        vector<double> roi = (vector<double>) (img_roi.reshape(1,1));
         vector<double> esf, psf, mtf, freq;
 
         /* MAIN FUNCTION */

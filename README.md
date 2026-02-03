@@ -1,30 +1,5 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -37,7 +12,6 @@
     A module to calculate SFR in multiple deployable languages.
   </p>
 </div>
-
 
 
 <!-- TABLE OF CONTENTS -->
@@ -70,59 +44,31 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This is a module written in c++ (and soon Pytho) which is an implementation of Peter Burn's Matlab version ISO-12233 slant-edge methodology: sfrmat3.  It is used primarily as a fast and efficient way to deploy camera characterization.
+This is a module written in c++  and pythonwhich is an implementation of Peter Burn's Matlab version ISO-12233 slant-edge methodology: sfrmat3.  It is used primarily as a fast and efficient way to deploy camera characterization.
 
 However, this is not meant solely as a standalone package but rather as a teaching tool for image processing standard practices.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Instructions to build the projects depend on which language you choose, in each subfolder will be specfics of how to build.
 
-### Prerequisites
+### Introduction to Modulation Transfer Functions
+The main output of this code base is to analyze images taken from a camera of a slant edge to determine the spatial frequency response.  To start one needs to have a few pre-requisites: an image of slant edges and a config file that determines frequency calibration as well as regions of interest that the algorithm uses to crop the individual images.
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Generally speaking, when one tests a camera frequency response, it is required to test on-axis as well as off-axis so multiple slant edges will be needed at different field angles. The data directory has an example of a standard image and a config.json file.
 
-### Installation
+The algorithm here is borrowed heavily from Peter Burns' SFRmat3 which stems from ISO-12233 and Alan Boreman's "Modulation Transfer Function in Electro and Optical Systems".  Where the gist is that each slant edge is averaged to an edge spread function (ESF) and used to calculate a point spread function (PSF), then a Fourier Transform is required to calculate a complex spatial frequency response and the modulus of that complex function will give the modulation transfer function (MTF).
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+By making a few assumptions, this methodology work well.  Firstly, we assume that the system is optical system is linear and that an optical transfer function formalism is applicable.  Although this assumption is not strictly required to complete the calculation, it does help to clarify the representation of the MTF as a quantitative represenation of image quality.  Even though nonlinearities may arise due to abberations in the far off-axis, the MTF is still useful in describing the relative image quality to on-axis.  Secondly, that the ESF acts as an impulse response mechanism that is used to characterize the spatial frequency response is valid.  Similar to mechanical or electrical wavelet testing, there are multiple ways to induce a input-output relation such as swept-sine, impulse or white noise.  It's just that for camera optics testing, the intersection of convinence and accuracy is best with a slant edge impulse response.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
+However, there are practical complexities that Burns and Boreman treat similarily with regards to the image processing that are implemented within the full algorithm.
+
+### 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
